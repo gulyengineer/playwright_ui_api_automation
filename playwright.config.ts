@@ -1,4 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as dotenv from 'dotenv';
+import { getEnvOrThrow } from './utils/env.ts';
+
+dotenv.config({ path: '.env' });
 
 export default defineConfig({
   testDir: 'tests',
@@ -7,8 +11,8 @@ export default defineConfig({
   fullyParallel: true,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    // default baseURL (can be overridden per-project or via env vars)
-    baseURL: process.env.BASE_URL || 'https://example.com',
+    // default baseURL (can be overridden per-project)
+    baseURL: getEnvOrThrow('BASE_URL'),
     actionTimeout: 0,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure'
@@ -19,16 +23,16 @@ export default defineConfig({
       testMatch: ['tests/ui/**/*.spec.ts'],
       use: {
         ...devices['Desktop Chrome'],
-        baseURL: process.env.UI_BASE_URL || 'https://example.com'
+        baseURL: getEnvOrThrow('TEST_REPORT_URL')
       }
     },
     {
       name: 'api',
       testMatch: ['tests/api/**/*.spec.ts'],
       use: {
-        // API tests use the request fixture which will resolve paths against this baseURL
-        baseURL: process.env.API_BASE_URL || 'https://jsonplaceholder.typicode.com'
+        baseURL: getEnvOrThrow('API_BASE_URL')
       }
     }
   ]
 });
+

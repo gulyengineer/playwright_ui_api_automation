@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
-import { getEnvOrThrow } from './utils/env.ts';
+import { getEnvOrThrow } from './tests/utils/env.ts';
 
 dotenv.config({ path: '.env' });
 
@@ -20,15 +20,17 @@ export default defineConfig({
   projects: [
     {
       name: 'ui',
-      testMatch: ['tests/ui/**/*.spec.ts'],
+      testMatch: ['tests/specs/**/*.spec.ts'],
       use: {
         ...devices['Desktop Chrome'],
-        baseURL: getEnvOrThrow('TEST_REPORT_URL')
+        baseURL: getEnvOrThrow('TEST_REPORT_URL'),
+        headless: false,
+        trace: 'on-first-retry',
       }
     },
     {
       name: 'api',
-      testMatch: ['tests/api/**/*.spec.ts'],
+      testMatch: ['tests/example/**/*.spec.ts'],
       use: {
         baseURL: getEnvOrThrow('API_BASE_URL')
       }

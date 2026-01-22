@@ -1,9 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { getEnvOrThrow } from '../../utils/env';
 
 test.describe('Trivy HTML Report', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('C:\\Users\\dell\\VSCodeProjects\\playwright_ui_api_automation\\Trivy Report.html');
+
+      await page.goto(getEnvOrThrow('TEST_REPORT_URL'));
+   
   });
 
   test(`Page title is Trivy Report`, async ({ page }) => {
@@ -16,4 +19,6 @@ test.describe('Trivy HTML Report', () => {
   });
 
 
+
 });
+

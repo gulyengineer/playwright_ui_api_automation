@@ -23,9 +23,8 @@ export const test = base.extend<Fixtures>({
     await use(report);
 
     // Stop tracing (equivalent to @AfterEach)
-    const testName = testInfo.title.replace(/[^a-zA-Z0-9.-]/g, '_');
     await context.tracing.stop({
-      path: `trace-${testName}.zip`,
+      path: testInfo.outputPath('trace.zip'),
     });
   },
 });

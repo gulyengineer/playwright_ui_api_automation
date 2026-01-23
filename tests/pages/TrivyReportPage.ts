@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
+import * as reportData from '../data/trivy-report-data.json';
 
 export class TrivyReportPage {
   readonly page: Page;
@@ -23,42 +24,10 @@ export class TrivyReportPage {
     this.tableHeaders = page.locator('.ant-table-thead th');
     this.vulsTable = page.locator('.ant-table');
 
-    this.expectedTableHeaderList = [
-      'Target',
-      'Library/Package',
-      'Vulnerability',
-      'NVD V2Score',
-      'NVD V3Score',
-      'EPSS Score %',
-      'Severity',
-      'Exploits',
-      'Installed Version',
-      'Fixed Version',
-      'Title',
-    ];
+    this.expectedTableHeaderList = reportData.tableHeaders;
+    this.expectedMenus = reportData.menus;
 
-    this.expectedMenus = [
-      'Vulnerabilities',
-      'Misconfigurations',
-      'Secrets',
-      'Licenses',
-      'Misconfiguration Summary',
-      'K8s Cluster Summary',
-      'Supply Chain SBOM(spdx)',
-      'Load a report',
-    ];
-
-    this.filters = [
-      'Critical',
-      'High',
-      'Medium',
-      'Low',
-      'Negligible',
-      'All',
-      'Has Exploit',
-      'Has fix',
-      'Has no fix',
-    ];
+    this.filters = reportData.filters;
 
     this.themeSwitch = page.locator('button.ant-switch');
     this.htmlTag = page.locator('html');
@@ -70,11 +39,13 @@ export class TrivyReportPage {
   }
 
   async validateMenuList(): Promise<void> {
-    for (const menuText of this.expectedMenus) {
-      await expect(
-        this.page.locator('.ant-menu-item', { hasText: menuText }),
-      ).toBeVisible();
-    }
+    await Promise.all(
+      this.expectedMenus.map(menuText =>
+        expect(
+          this.page.locator('.ant-menu-item', { hasText: menuText }),
+        ).toBeVisible(),
+      ),
+    );
   }
 
   async isVulsTableVisible(): Promise<void> {

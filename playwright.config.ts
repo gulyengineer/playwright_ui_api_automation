@@ -11,30 +11,11 @@ export default defineConfig({
   fullyParallel: true,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    // default baseURL (can be overridden per-project)
     baseURL: getEnvOrThrow('TEST_REPORT_URL'),
     actionTimeout: 0,
-    trace: 'retain-on-failure',
-    screenshot: 'only-on-failure'
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
-  projects: [
-    {
-      name: 'ui',
-      testMatch: ['tests/specs/**/*.spec.ts'],
-      use: {
-        ...devices['Desktop Chrome'],
-        baseURL: getEnvOrThrow('TEST_REPORT_URL'),
-        headless: false,
-        trace: 'on-first-retry',
-      }
-    },
-    {
-      name: 'api',
-      testMatch: ['tests/example/**/*.spec.ts'],
-      use: {
-        baseURL: getEnvOrThrow('API_BASE_URL')
-      }
-    }
-  ]
 });
 

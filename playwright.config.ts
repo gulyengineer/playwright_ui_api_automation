@@ -12,7 +12,7 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     // default baseURL (can be overridden per-project)
-    baseURL: getEnvOrThrow('BASE_URL'),
+    baseURL: getEnvOrThrow('TEST_REPORT_URL'),
     actionTimeout: 0,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure'

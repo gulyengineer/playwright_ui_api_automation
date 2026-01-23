@@ -1,0 +1,36 @@
+{
+    "tableHeaders": [
+        "Target",
+        "Library/Package",
+        "Vulnerability",
+        "NVD V2Score",
+        "NVD V3Score",
+        "EPSS Score %",
+        "Severity",
+        "Exploits",
+        "Installed Version",
+        "Fixed Version",
+        "Title"
+    ],
+    "menus": [
+        "Vulnerabilities",
+        "Misconfigurations",
+        "Secrets",
+        "Licenses",
+        "Misconfiguration Summary",
+        "K8s Cluster Summary",
+        "Supply Chain SBOM(spdx)",
+        "Load a report"
+    ],
+    "filters": [
+        "Critical",
+        "High",
+        "Medium",
+        "Low",
+        "Negligible",
+        "All",
+        "Has Exploit",
+        "Has fix",
+        "Has no fix"
+    ]
+}
